@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -46,7 +47,7 @@ class ProjectController extends Controller
 
         $project->save();
 
-        return redirect()->route('admin.projects.show', ['project' => $project->slug]);
+        return redirect()->route('admin.projects.show', ['project' => $project->slug])->with('message', 'New project: ' . ' ' . '"' . $project->title . '"' . ' ' . 'created successfully');
     }
 
     /**
@@ -63,24 +64,28 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProjectRequest $request, $slug)
     {
-        //
+        $project_to_update = $request->validated();
+        $project = Project::where('slug',$slug)->first();
+        $project->update($project_to_update);
+
+        return redirect()->route('admin.projects.show',['project'=>$project->slug])->with('message', 'Element changes: ' . ' ' . '"' . $project->title . '"' . ' ' .'have been made');
     }
 
     /**
