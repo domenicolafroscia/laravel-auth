@@ -69,6 +69,12 @@
                                     <i class="fa-solid fa-file-zipper fa-lg fa-fw"></i> Projects
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white {{ Route::currentRouteName() == 'admin' ? 'bg-secondary' : '' }}"
+                                    href="{{ route('admin.projects.trashed') }}">
+                                    <i class="fa-solid fa-trash fa-lg fa-fw"></i> Trash
+                                </a>
+                            </li>
                         </ul>
 
 

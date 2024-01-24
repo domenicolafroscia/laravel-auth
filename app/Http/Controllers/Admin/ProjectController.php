@@ -95,6 +95,6 @@ class ProjectController extends Controller
     {
         $project->delete();
 
-        return redirect()->route('admin.projects.index')->with('message', '"' . $project->title . ':' . '"' . ' ' . 'Deleted successfully');
+        return redirect()->route('admin.projects.index')->with('message', 'The project: ' . '"' . $project->title . ':' . '"' . ' ' . 'has been moved to the trash');
     }
 }

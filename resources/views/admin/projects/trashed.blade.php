@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mt-5">
-        <h2 class="text-center">Project List</h2>
+        <h2 class="text-center">Deleted projects</h2>
 
         @if (Session::has('message'))
             <div class="alert alert-success">
@@ -10,17 +10,13 @@
             </div>
         @endif
 
-        <div class="text-end">
-            <a class="btn btn-primary" href="{{ route('admin.projects.create') }}">New Project</a>
-        </div>
-
         @if (count($projects) > 0)
             <table class="table table-striped mt-5">
                 <thead>
                     <tr>
                         <th scope="col">Id</th>
                         <th scope="col">Title</th>
-                        <th scope="col">Creation date</th>
+                        <th scope="col">Deletion date</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -29,23 +25,24 @@
                         <tr>
                             <th scope="row">{{ $project->id }}</th>
                             <td>{{ $project->title }}</td>
-                            <td>{{ $project->created_at }}</td>
+                            <td>{{ $project->deleted_at }}</td>
                             <td>
 
-                                <a class="btn btn-success"
-                                    href="{{ route('admin.projects.show', ['project' => $project->slug]) }}"><i
-                                        class="fa-solid fa-info"></i></a>
-                                <a class="btn btn-warning"
-                                    href="{{ route('admin.projects.edit', ['project' => $project->slug]) }}"><i
-                                        class="fa-solid fa-pencil"></i></a>
                                 <form class="d-inline-block"
-                                    action="{{ route('admin.projects.destroy', ['project' => $project->slug]) }}"
-                                    method="POST">
+                                    action="{{ route('admin.projects.defDestroy', ['project' => $project->id]) }}">
                                     @csrf
                                     @method('DELETE')
 
-                                    <button class="btn btn-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-danger btn-delete" type="submit" data-title="{{ $project->title }}"><i class="fa-solid fa-trash"></i></button>
                                 </form>
+
+                                <form class="d-inline-block"
+                                    action="{{ route('admin.projects.restore', ['id' => $project->id]) }}">
+                                    @csrf
+
+                                    <button class="btn btn-primary" type="submit"><i class="fa-solid fa-trash-can-arrow-up"></i></button>
+                                </form>
+
 
                             </td>
                         </tr>
@@ -55,10 +52,11 @@
             </table>
         @else
             <div class="alert alert-warning mt-5">
-                <h2>There's no project yet, start creating one!</h2>
+                <h2>The trash is empty</h2>
             </div>
         @endif
 
 
+        @include('partials.delete-modal')
     </div>
 @endsection
