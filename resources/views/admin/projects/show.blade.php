@@ -22,5 +22,10 @@
         <p class="mt-4">
             {{ $project->content }}
         </p>
+
+       
+        <a class="btn btn-primary" href="{{ route('admin.projects.index') }}">Projects list</a>
+
+
     </div>
 @endsection

@@ -34,16 +34,14 @@ class ProjectController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     * @param  Project  $project
      * @param  StoreProjectRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProjectRequest $request)
+    public function store(StoreProjectRequest $request, Project $project)
     {
         $form_data = $request->validated();
-        $project = new Project();
         $project->fill($form_data);
-        $project->slug = Str::slug($project->title, '-');
 
         $project->save();
 
@@ -76,16 +74,15 @@ class ProjectController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $slug
+     * @param  Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProjectRequest $request, $slug)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
         $project_to_update = $request->validated();
-        $project = Project::where('slug',$slug)->first();
         $project->update($project_to_update);
 
-        return redirect()->route('admin.projects.show',['project'=>$project->slug])->with('message', 'Element changes: ' . ' ' . '"' . $project->title . '"' . ' ' .'have been made');
+        return redirect()->route('admin.projects.show',['project' => $project->slug])->with('message', 'Element changes: ' . ' ' . '"' . $project->title . '"' . ' ' .'have been made');
     }
 
     /**
