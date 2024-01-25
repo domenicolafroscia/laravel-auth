@@ -18,15 +18,18 @@ class TrashedController extends Controller
 
     public function restore($id) {
 
-        $project = Project::withTrashed()->find($id)->restore();
+        $project = Project::withTrashed()->find($id);
+        $project->restore();
 
-        return redirect()->route('admin.projects.index');        // ->with('message', 'The project: ' . '"' . $project->title . ':' . '"' . ' ' . 'it was restored successfully');
+        return redirect()->route('admin.projects.index')->with('message', 'The project: ' . '"' . $project->title . ':' . '"' . ' ' . 'it was restored successfully');
 
     }
 
-    public function defDestroy(Project $project) {
+    public function defDestroy($id) {
 
-        $project->delete();
+        $project = Project::withTrashed()->find($id);
+        $project->forceDelete();
+        
 
         return redirect()->route('admin.projects.trashed');
     }

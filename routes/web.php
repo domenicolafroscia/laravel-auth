@@ -28,8 +28,8 @@ Route::middleware(['auth', 'verified'])
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('projects', ProjectController::class)->parameters(['projects' => 'project:slug']);
         Route::get('trashed', [TrashedController::class, 'index'])->name('projects.trashed');
-        Route::get('restore/{id}', [TrashedController::class, 'restore'])->name('projects.restore');
-        Route::get('defDestroy', [TrashedController::class, 'defDestroy'])->name('projects.defDestroy');
+        Route::put('restore/{id}', [TrashedController::class, 'restore'])->name('projects.restore');
+        Route::delete('defDestroy/{id}', [TrashedController::class, 'defDestroy'])->name('projects.defDestroy');
     });
 
 require __DIR__.'/auth.php';

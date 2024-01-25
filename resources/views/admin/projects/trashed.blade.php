@@ -29,7 +29,7 @@
                             <td>
 
                                 <form class="d-inline-block"
-                                    action="{{ route('admin.projects.defDestroy', ['project' => $project->id]) }}">
+                                    action="{{ route('admin.projects.defDestroy', ['id' => $project->id]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
 
@@ -37,9 +37,9 @@
                                 </form>
 
                                 <form class="d-inline-block"
-                                    action="{{ route('admin.projects.restore', ['id' => $project->id]) }}">
+                                    action="{{ route('admin.projects.restore', ['id' => $project->id]) }}" method="POST">
                                     @csrf
-
+                                    @method('PUT')
                                     <button class="btn btn-primary" type="submit"><i class="fa-solid fa-trash-can-arrow-up"></i></button>
                                 </form>
 
