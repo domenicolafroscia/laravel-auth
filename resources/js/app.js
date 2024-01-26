@@ -3,6 +3,7 @@ import './bootstrap';
 import "~resources/scss/app.scss";
 
 import * as bootstrap from 'bootstrap';
+import { read } from '@popperjs/core';
 
 import.meta.glob([
     '../img/**'
@@ -28,4 +29,18 @@ buttons.forEach(button => {
 
         deleteModal.show();
     });
+})
+
+const previewImgElem = document.getElementById('preview-img');
+
+document.getElementById('cover_image').addEventListener
+('change', function() {
+    const selectedFile = this.files[0];
+    if (selectedFile) {
+       const reader = new FileReader();
+       reader.addEventListener("load", function() {
+        previewImgElem.src = reader.result;
+       })
+       reader.readAsDataURL(selectedFile);
+    }
 })

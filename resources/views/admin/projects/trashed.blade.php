@@ -4,6 +4,8 @@
     <div class="container mt-5">
         <h2 class="text-center">Deleted projects</h2>
 
+        <a class="btn btn-primary" href="{{ route('admin.projects.index') }}">Projects list</a>
+
         @if (Session::has('message'))
             <div class="alert alert-success">
                 {{ Session::get('message') }}

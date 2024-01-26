@@ -10,7 +10,7 @@
             </div>
         @endif
 
-        <form class="mt-5" action="{{ route('admin.projects.store') }}" method="POST">
+        <form class="mt-5" action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3 has-validation">
@@ -31,6 +31,20 @@
                         {{ $message }}
                     </div>
                 @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="cover_image" class="form-label">Image</label>
+                <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image">
+                @error('cover_image')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <img id="preview-img" src="" alt="" style="max-height: 250px">
             </div>
 
             <button class="btn btn-success" type="submit">Save</button>
